@@ -25,6 +25,9 @@ while r > r_f:
     v += a * Decimal(0.5) * dt
     t += dt
 
+print('With a dt of ' + str(dt) + ' our simulation time in seconds is')
+print(t)
+
 print('According to our full final equation, the following should be the time in seconds:')
 print(- math.sqrt(r_i / (2*gravitational_constant*(m_1 + m_2))) * (r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s)))
 
