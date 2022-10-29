@@ -1,0 +1,1 @@
+# newtonian-gravitation-collision-time
