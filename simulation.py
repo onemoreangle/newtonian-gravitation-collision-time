@@ -11,18 +11,15 @@ r_i = 148.6E9
 r_f = radius_sun + radius_earth
 delta_s = r_i - r_f
 
-dt = Decimal(0.005)
+dt = Decimal(0.001)
 t = Decimal(0)
 v = Decimal(0)
 r = Decimal(r_i)
-r_prev = Decimal(r_i)
 
 while r > r_f:
-    a = - Decimal(gravitational_constant * (m_1 + m_2)) / pow(r + (r - r_prev) * Decimal(0.5), 2)
-    v += a * Decimal(0.5) * dt
-    r_prev = r
-    r += v * dt 
-    v += a * Decimal(0.5) * dt
+    r += v * dt
+    a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
+    v += a * dt
     t += dt
 
 print('With a dt of ' + str(dt) + ' our simulation time in seconds is')
