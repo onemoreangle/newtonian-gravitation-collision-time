@@ -135,7 +135,7 @@ Similar to the reasoning for acceleration, we know that the velocity causes $r$ 
 \begin{align}
     v = \frac{dr}{dt} = - \sqrt{2G(m_1 + m_2)} \cdot \sqrt{\frac{R_i - r}{ rR_i}}
 \end{align}
-Now we can take the reciprocal of this, because we want to solve for $t$ at the left side, where $dt$ is currently the denominator. Also rearranging it slightly gives
+Now let us take the reciprocal of this because $dt$ is currently in the denominator and we want to solve for $dt$ so we can integrate for time. Additionally, rearranging it slightly gives
 \begin{align}
     \frac{dt}{dr} = - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \cdot \sqrt{\frac{r}{R_i - r}}
 \end{align}
@@ -144,7 +144,7 @@ and multiplying that by $dr$, then taking its integral results in
     \label{eq:primary_solution}
     \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr
 \end{align}
-Our main problem now consists of solving the integral on the right side of the equation, which we will do in the next section
+Our main problem now consists of solving the integral on the right side of the equation, which we will attempt in the next section
 \section{Solving the integral}
 First, let us define the integral as the following:
 \begin{align}
@@ -267,7 +267,7 @@ Then since
 \begin{align}
      R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} ~ \bigg|_{R_i} = \frac{1}{2} R_i \pi
 \end{align}
-And therefore, if we define $\Delta s = R_i - R_f$, so the change in distance for which we want to calculate the time it takes to get there, our final result becomes
+If we define $\Delta s = R_i - R_f$, the change in distance for which we want to calculate the time it takes to get there, our final result becomes
 \begin{align}
     \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[ R_i \biggl( tan^{-1}\biggl(\sqrt{\frac{R_f}{ \Delta s}}\biggr) - \frac{1}{2}\pi \biggr) - \sqrt{R_f \Delta s } \biggr]
 \end{align}
@@ -290,39 +290,46 @@ which is exactly the same as the simplified result (\ref{eq:simplified_kepler}) 
 \\
 Below is the script that simulates a hypothetical situation where the earth stops following its orbit and starts falling straight into the sun. The script does this by calculating the acceleration at the current distance, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collide, it prints the time it took in our simulation and the time it should take according to our equation. Then finally it prints the time according to the Kepler's equation.
 \begin{lstlisting}[language=Python]
-from decimal import *
-import math
-
-gravitational_constant = 6.6743E-11
-radius_sun = 6.9634E8
-radius_earth = 6.3781E6
-m_1 = mass_sun = 1.989E30
-m_2 = mass_earth = 5.972E24
-
-r_i = 148.6E9
-r_f = radius_sun + radius_earth
-delta_s = r_i - r_f
-
-dt = Decimal(0.001)
-t = Decimal(0)
-v = Decimal(0)
-r = Decimal(r_i)
-
-while r > r_f:
-    r += v * dt
-    a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
-    v += a * dt
-    t += dt
-
-print('With a dt of ' + str(dt) + ' our simulation time in seconds is')
-print(t)
-
-print('According to our full final equation, the following should be the time in seconds:')
-print(- math.sqrt(r_i / (2*gravitational_constant*(m_1 + m_2))) * (r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s)))
-
-print("And according to the Kepler equation, we get:")
-print(math.pi * math.sqrt(pow(r_i, 3) / (8 * gravitational_constant * (m_1 + m_2))))
+    from decimal import *
+    import math
+    
+    gravitational_constant = 6.6743E-11
+    radius_sun = 6.9634E8
+    radius_earth = 6.3781E6
+    m_1 = mass_sun = 1.989E30
+    m_2 = mass_earth = 5.972E24
+    
+    r_i = 148.6E9
+    r_f = radius_sun + radius_earth
+    delta_s = r_i - r_f
+    
+    dt = Decimal(0.001)
+    t = Decimal(0)
+    v = Decimal(0)
+    r = Decimal(r_i)
+    
+    while r > r_f:
+        r += v * dt
+        a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
+        v += a * dt
+        t += dt
+    
+    print("dt: " + str(round(dt, 6)))
+    print("simulation time: " + str(round(t, 6)))
+    
+    equation_time = - math.sqrt(r_i / (2 * gravitational_constant * (m_1 + m_2))) * (
+                r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s))
+    print("equation time: " + str(round(equation_time, 6)))
+    
+    kepler_time = math.pi * math.sqrt(pow(r_i, 3) / (8 * gravitational_constant * (m_1 + m_2)))
+    print("kepler time: " + str(round(kepler_time, 6)))    
 \end{lstlisting}
 We get the following output while running the script:
-
+\begin{lstlisting}
+    dt: 0.001000
+    simulation time: 5521437.476000
+    equation time: 5521437.475077
+    kepler time: 5522200.716264
+\end{lstlisting}
+So it takes $5521437$ seconds, or 63 days 21 hours and almost 44 minutes, for the earth to crash into the sun. Running the program with an increasingly small $dt$, it is also very convincing that the simulation time actually converges to the time of our equation. Also, you can see that the time difference by using the Kepler's equation simplification is quite large in terms of seconds. In fact it is off by approximately 763 seconds. 
 \end{document}
