@@ -1,5 +1,5 @@
 # Newtonian Gravitation Collision Time
-The python script simulates a scenario where two objects with masses `m_1` and `m_2` starting with zero velocity gravitate towards eachother in empty space until their centers of gravity are at a distance `r_f`, which is the sum of their radii. 
+The Python script simulates a scenario where two objects with masses `m_1` and `m_2` starting with zero velocity gravitate towards eachother in empty space until their centers of gravity are a distance `r_f`, which is the sum of their radii, apart. 
 
 Output of the simulation with a `dt` of `0.001`:
 ```
