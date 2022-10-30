@@ -115,6 +115,7 @@ Which results in
 \end{align}
 or 
 \begin{align}
+    \label{eq:v_squared}
     v^2 = 2G (m_1 + m_2) (\frac{1}{r} + C)
 \end{align}
 Now, we know that $v=0$ when the objects are at their starting positions when $r=R_i$, the distance between the centers of gravity of the objects at their initial position. This means that our integration constant $C$ is such that
@@ -125,11 +126,12 @@ This gives
 \begin{align}
     C = -\frac{1}{R_i}
 \end{align}
-Substituting this result in (TODO) and taking its square root results in
+Substituting this result in (\ref{eq:v_squared}) and taking its square root results in
 \begin{align}
+    \label{eq:v_pm_solution}
     v = \pm \sqrt{2G (m_1 + m_2)}  \cdot \sqrt{\frac{1}{r} - \frac{1}{R_i}}
 \end{align}
-Similar to the reasoning for acceleration, we know that the velocity causes $r$ to become smaller, therefore we should be looking at the negative solution given by (TODO). Additionally rewriting it slightly results in
+Similar to the reasoning for acceleration, we know that the velocity causes $r$ to become smaller, therefore we should be looking at the negative solution given by (\ref{eq:v_pm_solution}). Additionally rewriting it slightly results in
 \begin{align}
     v = \frac{dr}{dt} = - \sqrt{2G(m_1 + m_2)} \cdot \sqrt{\frac{R_i - r}{ rR_i}}
 \end{align}
@@ -139,6 +141,7 @@ Now we can take the reciprocal of this, because we want to solve for $t$ at the 
 \end{align}
 and multiplying that by $dr$, then taking its integral results in
 \begin{align}
+    \label{eq:primary_solution}
     \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr
 \end{align}
 Our main problem now consists of solving the integral on the right side of the equation, which we will do in the next section
@@ -185,17 +188,20 @@ Then we can use partial fraction decomposition to rewrite the right side to
 \end{align}
 The solution to the left integral is simply $tan^{-1}(w)$ so that our integral becomes
 \begin{align}
+    \label{eq:solution_w}
     2R_i \Biggl[ \tan^{-1}(w) - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]
 \end{align}
 However, the right integral requires slightly more work. For that let us define a $z$ such that $w = tan(z)$. Then
 \begin{align}
+    \label{eq:w_squared_add_one}
     (w^2 + 1) = (tan^2(z) + 1)^2 = sec^4(z)
 \end{align}
 and
 \begin{align}
+    \label{eq:derivative_w_dz}
     \frac{dw}{dz} = \frac{d}{dz}[tan(z)] = sec^2(z) \implies dw = sec^2(z)dz
 \end{align} 
-Combining (todo: previous two equations) we get that the right side integral of (todO) can be rewritten as
+Combining (\ref{eq:w_squared_add_one}) and (\ref{eq:derivative_w_dz}) we get that the right side integral of (\ref{eq:solution_w}) can be rewritten as
 \begin{align}
     \int \frac{1}{(w^2 + 1)^2} ~ dw = \int \frac{1}{sec^2(z)}~dz = \int{cos^2(dz)}~dz
 \end{align}
@@ -207,9 +213,10 @@ Then, using integration by parts we get
 \end{align}
 so that
 \begin{align}
+    \label{eq:cos_squared}
     \int cos^2(z) dz = \frac{1}{2} \bigl(z + sin(z)~cos(z)\bigr)
 \end{align}
-And since we defined $w = tan(z)$, $z = tan^{-1}(w)$ which means (TODO) becomes
+And since we defined $w = tan(z)$, $z = tan^{-1}(w)$ which means (\ref{eq:cos_squared}) becomes
 \begin{align}
     \frac{1}{2} \bigl(  tan^{-1}(w) + sin( tan^{-1}(w))~cos( tan^{-1}(w)) \bigr)
 \end{align}
@@ -217,7 +224,7 @@ When we take the $sin$ of an angle, we get the ratio of the opposite side over t
 \begin{align}
     sin = \frac{\text{opposite}}{\text{hypotenuse}}
 \end{align}
-Now, $tan^{-1}$ gives us an angle if we supply it with the ratio of opposite over adjacent, and if we supply this angle to the $sin$ function, we would get back the ratio of opposite over the hypotenuse, that is what $sin$ does. Can't we calculate this directly? We can, because we already supply $tan^{-1}$ with both the opposite and adjacent side with which we can calculate the hypotenuse. The adjacent side is just simply $1$, so therefore sine and by the same reasoning cosine, are given as follows
+Now, $tan^{-1}$ gives us an angle if we supply it with the ratio of opposite over adjacent, and if we supply this angle to the $sin$ function, we would get back the ratio of opposite over the hypotenuse, that is what $sin$ does. Can we calculate the result of $sin$ directly? Yes, we can, because we already supply $tan^{-1}$ with both the opposite and adjacent side with which we can calculate the hypotenuse. The adjacent side is just simply $1$, so therefore sine and by the same reasoning cosine, are given as follows
 \begin{align}
     sin(tan^{-1}(\frac{w}{1})) &= \frac{w}{\sqrt{1 + w^2}} \\
     cos(tan^{-1}(\frac{w}{1})) &= \frac{1}{\sqrt{1 + w^2}}
@@ -250,7 +257,7 @@ so that we finally have the solution to this section of the problem
     &= R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)}
 \end{align}
 \section{Solution}
-We have the solution to our integral, so we can now just solve the definite integral for $\Delta T$ to get our final equation:
+We have the solution to our integral, so we can now just substitute it in (\ref{eq:primary_solution}) and solve the definite integral for $\Delta T$ to get our final equation:
 \begin{align}
 \Delta T &=  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr\\
 &=   - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[  R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} \biggr]_{R_i}^{R_f}
@@ -263,11 +270,12 @@ And therefore, if we define $\Delta s = R_i - R_f$, so the change in distance fo
 \begin{align}
     \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[ R_i \biggl( tan^{-1}\biggl(\sqrt{\frac{R_f}{ \Delta s}}\biggr) - \frac{1}{2}\pi \biggr) - \sqrt{R_f \Delta s } \biggr]
 \end{align}
-Now, for the simplified case where we disregard the radii of the objects, $R_f$ would be $0$ upon collision, so that our equation in this case becomes
+So there we have it, our final result. Now, for the simplified case where we disregard the radii of the objects, $R_f$ would be $0$ upon collision, so that our equation in this case becomes
 \begin{align}
+    \label{eq:simplified_kepler}
     \Delta T_{s} =  \frac{1}{2} R_i \pi \sqrt{\frac{R_i}{2G(m_1 + m_2)}} = \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
 \end{align}
-We will soon come back to this beautiful result when we are verifying our solution in the next section.
+We will soon come back to this beautiful simplification when we are verifying our solution in the next section.
 \section{Checking the validity}
 Before we test our actual result with a calculation of (18) against a simulation, let us first take a look at Kepler's Third Law
 \begin{align}
@@ -277,9 +285,9 @@ where $p$ is the orbital period and $a$ is the semi-major axis. If we imagine tw
 \begin{align}
     \Delta T_{s} =  \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
 \end{align}
-which is exactly the same as the simplified result that we already found! That should give us enough confidence, but let us create a simple simulation program in Python so that we can compare the result of a simulation to the more complex solution that includes the radii of the objects.\\
+which is exactly the same as the simplified result (\ref{eq:simplified_kepler}) that we already found! That should give us enough confidence, but let us create a simple simulation program in Python so that we can compare the result of a simulation to the more complex solution that includes the radii of the objects.\\
 \\
-Below is the script that simulates the problem. It does this by calculating the acceleration, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collided in the simulation, it prints the simulated time it took for the objects to collide and also the times it takes according to our equation. Then finally it prints the time it takes using Kepler's equation.
+Below is the script that simulates a hypothetical situation where the earth stops following its orbit and starts falling straight into the sun. The script does this by calculating the acceleration at the current distance, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collide, it prints the time it took in our simulation and the time it should take according to our equation. Then finally it prints the time according to the Kepler's equation.
 \begin{lstlisting}[language=Python]
 from decimal import *
 import math
