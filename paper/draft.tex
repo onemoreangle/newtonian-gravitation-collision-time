@@ -218,6 +218,7 @@ so that
 \end{align}
 And since we defined $w = tan(z)$, $z = tan^{-1}(w)$ which means (\ref{eq:cos_squared}) becomes
 \begin{align}
+    \label{eq:temp_right}
     \frac{1}{2} \bigl(  tan^{-1}(w) + sin( tan^{-1}(w))~cos( tan^{-1}(w)) \bigr)
 \end{align}
 When we take the $sin$ of an angle, we get the ratio of the opposite side over the hypotenuse
@@ -229,7 +230,7 @@ Now, $tan^{-1}$ gives us an angle if we supply it with the ratio of opposite ove
     sin(tan^{-1}(\frac{w}{1})) &= \frac{w}{\sqrt{1 + w^2}} \\
     cos(tan^{-1}(\frac{w}{1})) &= \frac{1}{\sqrt{1 + w^2}}
 \end{align}
-Substituting this back into (todo) gives us our solution to the cosine squared integral
+Substituting this back into (\ref{eq:temp_right}) gives us our solution to the cosine squared integral
 \begin{align}
     \int cos^2(z) dz = \frac{1}{2} \bigl(z + \frac{w}{1+w^2}\bigr)
 \end{align}
