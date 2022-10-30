@@ -8,3 +8,5 @@ simulation time: 5521437.476000
 equation time: 5521437.475077
 kepler time: 5522200.716264
 ```
+
+This is to partially verify an equation derivation, which is described in `paper/*`
