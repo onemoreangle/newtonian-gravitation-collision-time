@@ -282,54 +282,54 @@ Before we test our actual result with a calculation of (18) against a simulation
 \begin{align}
     p^2 = \frac{4\pi^2}{G(m_1 + m_2)} a^3
 \end{align}
-where $p$ is the orbital period and $a$ is the semi-major axis. If we imagine two planets with an infinitesimally small radii but normal masses that have an orbit with an infinitesimally small semi-minor axis, so that the second planet would basically fall into the first, and reverse back into space by being slingshot after coming incredibly close to the center of gravity of the first; then the semi-major axis would basically be half of $R_i$ and the falling time from initial position would be half of the orbital period, therefore $p = 2\Delta T$ and $a = \frac{1}{2}R_i$. Substituting this in (20) and solving for $\Delta T$ we get
+where $p$ is the orbital period and $a$ is the semi-major axis. If we imagine two planets with infinitesimally small radii but normal masses that have an orbit with an infinitesimally small semi-minor axis, so that the second planet would basically fall into the first, and reverse back into space by being slingshot after coming incredibly close to the center of gravity of the first; then the semi-major axis would basically be half of $R_i$ and the falling time from initial position would be half of the orbital period, therefore $p = 2\Delta T$ and $a = \frac{1}{2}R_i$. Substituting this in (20) and solving for $\Delta T$ we get
 \begin{align}
-    \Delta T_{s} =  \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
+    \Delta T_{K} =  \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
 \end{align}
 which is exactly the same as the simplified result (\ref{eq:simplified_kepler}) that we already found! That should give us enough confidence, but let us create a simple simulation program in Python so that we can compare the result of a simulation to the more complex solution that includes the radii of the objects.\\
 \\
 Below is the script that simulates a hypothetical situation where the earth stops following its orbit and starts falling straight into the sun. The script does this by calculating the acceleration at the current distance, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collide, it prints the time it took in our simulation and the time it should take according to our equation. Then finally it prints the time according to the Kepler's equation.
 \begin{lstlisting}[language=Python]
-    from decimal import *
-    import math
-    
-    gravitational_constant = 6.6743E-11
-    radius_sun = 6.9634E8
-    radius_earth = 6.3781E6
-    m_1 = mass_sun = 1.989E30
-    m_2 = mass_earth = 5.972E24
-    
-    r_i = 148.6E9
-    r_f = radius_sun + radius_earth
-    delta_s = r_i - r_f
-    
-    dt = Decimal(0.001)
-    t = Decimal(0)
-    v = Decimal(0)
-    r = Decimal(r_i)
-    
-    while r > r_f:
-        r += v * dt
-        a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
-        v += a * dt
-        t += dt
-    
-    print("dt: " + str(round(dt, 6)))
-    print("simulation time: " + str(round(t, 6)))
-    
-    equation_time = - math.sqrt(r_i / (2 * gravitational_constant * (m_1 + m_2))) * (
-                r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s))
-    print("equation time: " + str(round(equation_time, 6)))
-    
-    kepler_time = math.pi * math.sqrt(pow(r_i, 3) / (8 * gravitational_constant * (m_1 + m_2)))
-    print("kepler time: " + str(round(kepler_time, 6)))    
+from decimal import *
+import math
+
+gravitational_constant = 6.6743E-11
+radius_sun = 6.9634E8
+radius_earth = 6.3781E6
+m_1 = mass_sun = 1.989E30
+m_2 = mass_earth = 5.972E24
+
+r_i = 148.6E9
+r_f = radius_sun + radius_earth
+delta_s = r_i - r_f
+
+dt = Decimal(0.001)
+t = Decimal(0)
+v = Decimal(0)
+r = Decimal(r_i)
+
+while r > r_f:
+    r += v * dt
+    a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
+    v += a * dt
+    t += dt
+
+print("dt: " + str(round(dt, 6)))
+print("simulation time: " + str(round(t, 6)))
+
+equation_time = - math.sqrt(r_i / (2 * gravitational_constant * (m_1 + m_2))) * (
+            r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s))
+print("equation time: " + str(round(equation_time, 6)))
+
+kepler_time = math.pi * math.sqrt(pow(r_i, 3) / (8 * gravitational_constant * (m_1 + m_2)))
+print("kepler time: " + str(round(kepler_time, 6)))    
 \end{lstlisting}
 We get the following output while running the script:
 \begin{lstlisting}
-    dt: 0.001000
-    simulation time: 5521437.476000
-    equation time: 5521437.475077
-    kepler time: 5522200.716264
+dt: 0.001000
+simulation time: 5521437.476000
+equation time: 5521437.475077
+kepler time: 5522200.716264
 \end{lstlisting}
 So it takes $5521437$ seconds, or 63 days 21 hours and almost 44 minutes, for the earth to crash into the sun. Running the program with an increasingly small $dt$, it is also very convincing that the simulation time actually converges to the time of our equation. Also, you can see that the time difference by using the Kepler's equation simplification is quite large in terms of seconds. In fact it is off by approximately 763 seconds. 
 \end{document}
