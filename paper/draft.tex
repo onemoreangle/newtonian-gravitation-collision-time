@@ -1,0 +1,319 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\title{Deriving a precise Newtonian equation for the time it takes two separated bodies in an isolated system to collide due to the gravitational force}
+\author{Roy Garrido }
+\date{October 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+During my calculus lessons I wondered how we could derive an equation to calculate the time it takes for two separated objects to collide by virtue of their mutual gravitational attraction. In other words, how can we combine both the gravitational force equation
+\begin{align}
+    F_g = G \frac{m_1 m_2}{r^2}
+\end{align}
+and Newton's Second Law of Motion
+\begin{align}
+    F = ma
+\end{align}
+to derive an equation that solves for the time it takes them to collide if you specify the masses of both objects and their initial separation.
+\\
+\\
+After stumbling across some specific tricks, I finally managed to solve this and since I am still unable to find any solid resource about it online, I decided to share the solution here for anyone who may find this interesting or finds himself in a similar situation.
+\\
+\\
+Notes:
+\begin{itemize}
+    \item We do not take into account any relativistic effects and in this solution we also assume that the objects have no initial velocity at their starting positions.
+    \item I may sometimes go into a bit of detail regarding the methods used to solve this problem, which might be tedious if you already know them, but I wanted this solution to be as self-contained as it could be, and I actually learned a lot of them working through this exercise.
+\end{itemize}
+
+\newpage
+\section{Setting up the problem}
+We start by once again looking at the two equations:
+\begin{align}
+    F_g = G \frac{m_1 m_2}{r^2}
+\end{align}
+and
+\begin{align}
+    F = ma
+\end{align}
+Taking note of the fact that the gravitational force equation holds true for both objects, meaning each object receives the same amount of force. Since
+\begin{align}
+    F = ma \implies a = \frac{F}{m}
+\end{align}
+    we can then quickly see how two objects with different masses would have different accelerations, because the acceleration $a$ of the object is inversely proportional to its mass. Using the acceleration equation above for each object, we get the following two equations for the acceleration:
+
+    \begin{align}
+        |a_1| = \frac{F_g}{m_1} = G \frac{m_2}{r^2}\\
+        |a_2| = \frac{F_g}{m_2} = G \frac{m_1}{r^2}
+    \end{align}
+    Since both of these accelerations increase the velocity of the objects in such a way that the distance $r$ (note that $r$ is the distance between their centers of gravity) between the objects diminishes faster and faster, we can define a new acceleration that is the sum of both of these accelerations.
+
+\begin{align}
+    |a_{s}| = |a_1| + |a_2| = G \frac{m_1 + m_2}{r^2}
+\end{align}
+    But we have to take note that the acceleration $a_s$ is a second derivative of the distance $r$. A positive value would imply that $r$ would get bigger and bigger as time goes by, since our assumption is that initially $v_i = 0$. We know that the opposite is true. So our equation becomes
+\begin{align}
+        a_s = -G \frac{m_1 + m_2}{r^2}
+\end{align}
+We could alternatively have done this properly by assigning vectors to the equations, it would of course have resulted in the same equation, but I felt it would have been slightly more obscure and that it would not have resulted in the same amount of intuition for the problem.\\
+\\
+In terms of derivatives, $a_s$ can be described as
+\begin{align}
+    a_s = \frac{dv}{dt} = \frac{d^2r}{dt^2} =  -G \frac{m_1 + m_2}{r^2}
+\end{align}
+We can then use the following
+\begin{align}
+    \frac{dv}{dt} = \frac{dv}{dt} \cdot \frac{dr}{dr} = \frac{dr}{dt} \cdot \frac{dv}{dr} = v \cdot \frac{dv}{dr}
+\end{align}
+to rewrite (8) after multiplying it by $dr$
+\begin{align}
+    v~{dv} = -G \frac{m_1 + m_2}{r^2}~dr
+\end{align}
+and since $G$, $m_1$ and $m_2$ are independent of $r$, we can integrate this as follows
+\begin{align}
+    \int{v~dv} = -G(m_1 + m_2) \int{\frac{1}{r^2} dr}
+\end{align}
+Which results in
+\begin{align}
+    \frac{1}{2}v^2 = G (m_1 + m_2) (\frac{1}{r} + C)
+\end{align}
+or 
+\begin{align}
+    v^2 = 2G (m_1 + m_2) (\frac{1}{r} + C)
+\end{align}
+Now, we know that $v=0$ when the objects are at their starting positions when $r=R_i$, the distance between the centers of gravity of the objects at their initial position. This means that our integration constant $C$ is such that
+\begin{align}
+    \frac{1}{r} + C ~ \bigg|_{r=R_i} = 0
+\end{align}
+This gives
+\begin{align}
+    C = -\frac{1}{R_i}
+\end{align}
+Substituting this result in (TODO) and taking its square root results in
+\begin{align}
+    v = \pm \sqrt{2G (m_1 + m_2)}  \cdot \sqrt{\frac{1}{r} - \frac{1}{R_i}}
+\end{align}
+Similar to the reasoning for acceleration, we know that the velocity causes $r$ to become smaller, therefore we should be looking at the negative solution given by (TODO). Additionally rewriting it slightly results in
+\begin{align}
+    v = \frac{dr}{dt} = - \sqrt{2G(m_1 + m_2)} \cdot \sqrt{\frac{R_i - r}{ rR_i}}
+\end{align}
+Now we can take the reciprocal of this, because we want to solve for $t$ at the left side, where $dt$ is currently the denominator. Also rearranging it slightly gives
+\begin{align}
+    \frac{dt}{dr} = - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \cdot \sqrt{\frac{r}{R_i - r}}
+\end{align}
+and multiplying that by $dr$, then taking its integral results in
+\begin{align}
+    \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr
+\end{align}
+Our main problem now consists of solving the integral on the right side of the equation, which we will do in the next section
+\section{Solving the integral}
+First, let us define the integral as the following:
+\begin{align}
+    \int \sqrt{\frac{r}{R_i - r}} ~ dr
+\end{align}
+Then, let us define a substitution that is easier to work with:
+\begin{align}
+    u = \frac{r}{R_i - r}
+\end{align}
+its derivative in terms of $r$ is
+\begin{align}
+    \frac{du}{dr} = \frac{d}{dr}\Bigg[ \frac{r}{R_i - r} \Bigg] = \frac{R_i}{(R_i - r)^2}
+\end{align}
+and since
+\begin{align}
+    (u + 1)^2 = \biggr(\frac{R_i}{R_i - r}\biggl)^2 = \frac{R_i^2}{(R_i - r)^2}
+\end{align}
+we can rewrite $dr$ in terms of $u$
+\begin{align}
+    dr = \frac{R_i}{(u+1)^2} ~du
+\end{align}
+So our integral now becomes
+\begin{align}
+    \int \sqrt{u} ~ dr = R_i \int \frac{\sqrt{u}}{(u + 1)^2} ~ du
+\end{align}
+Then let $w = \sqrt{u}$, so that
+\begin{align}
+    \frac{dw}{du} = \frac{d}{du} \biggl[ \sqrt{u} \biggr] = \frac{1}{2\sqrt{u}}
+\end{align}
+which implies
+\begin{align}
+    du = 2\sqrt{u}~dw = 2w~ dw
+\end{align}
+and with that our integral in terms of $w$ becomes
+\begin{align}
+    R_i \int \frac{\sqrt{u}}{(u + 1)^2} ~ du = 2R_i \int \frac{w^2}{(w^2 + 1)^2}~ dw
+\end{align}
+Then we can use partial fraction decomposition to rewrite the right side to
+\begin{align}
+    2R_i \Biggl[ \int \frac{1}{w^2 + 1} ~dw - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]
+\end{align}
+The solution to the left integral is simply $tan^{-1}(w)$ so that our integral becomes
+\begin{align}
+    2R_i \Biggl[ \tan^{-1}(w) - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]
+\end{align}
+However, the right integral requires slightly more work. For that let us define a $z$ such that $w = tan(z)$. Then
+\begin{align}
+    (w^2 + 1) = (tan^2(z) + 1)^2 = sec^4(z)
+\end{align}
+and
+\begin{align}
+    \frac{dw}{dz} = \frac{d}{dz}[tan(z)] = sec^2(z) \implies dw = sec^2(z)dz
+\end{align} 
+Combining (todo: previous two equations) we get that the right side integral of (todO) can be rewritten as
+\begin{align}
+    \int \frac{1}{(w^2 + 1)^2} ~ dw = \int \frac{1}{sec^2(z)}~dz = \int{cos^2(dz)}~dz
+\end{align}
+Then, using integration by parts we get 
+\begin{align}
+     \int cos^2(z) ~ dz &= sin(z)~cos(z) + \int sin^2(z) ~dz\\
+    &= sin(z)~cos(z) + \int (1 - cos^2(z)) ~dz \\
+    &= sin(z)~cos(z) + z - \int cos^2(z)~dz
+\end{align}
+so that
+\begin{align}
+    \int cos^2(z) dz = \frac{1}{2} \bigl(z + sin(z)~cos(z)\bigr)
+\end{align}
+And since we defined $w = tan(z)$, $z = tan^{-1}(w)$ which means (TODO) becomes
+\begin{align}
+    \frac{1}{2} \bigl(  tan^{-1}(w) + sin( tan^{-1}(w))~cos( tan^{-1}(w)) \bigr)
+\end{align}
+When we take the $sin$ of an angle, we get the ratio of the opposite side over the hypotenuse
+\begin{align}
+    sin = \frac{\text{opposite}}{\text{hypotenuse}}
+\end{align}
+Now, $tan^{-1}$ gives us an angle if we supply it with the ratio of opposite over adjacent, and if we supply this angle to the $sin$ function, we would get back the ratio of opposite over the hypotenuse, that is what $sin$ does. Can't we calculate this directly? We can, because we already supply $tan^{-1}$ with both the opposite and adjacent side with which we can calculate the hypotenuse. The adjacent side is just simply $1$, so therefore sine and by the same reasoning cosine, are given as follows
+\begin{align}
+    sin(tan^{-1}(\frac{w}{1})) &= \frac{w}{\sqrt{1 + w^2}} \\
+    cos(tan^{-1}(\frac{w}{1})) &= \frac{1}{\sqrt{1 + w^2}}
+\end{align}
+Substituting this back into (todo) gives us our solution to the cosine squared integral
+\begin{align}
+    \int cos^2(z) dz = \frac{1}{2} \bigl(z + \frac{w}{1+w^2}\bigr)
+\end{align}
+If we now substitute this back into our original integral, substitute $z = tan^{-1}(w)$ and rearrange slightly we get
+\begin{align}
+    2R_i \Biggl[ \tan^{-1}(w) - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]\\
+    = R_i \Biggl[ \tan^{-1}(w) - \frac{w}{1+w^2}\Biggr]
+\end{align}
+Now we only have to rewrite everything in terms of $r$ and we obtain a solution to our integral. Since
+we substituted
+\begin{align}
+    w = \sqrt{u} = \sqrt{\frac{r}{R_i - r}}
+\end{align}
+and
+\begin{align}
+    {1+w^2} = \frac{R_i}{R_i - r} 
+\end{align}
+so that
+\begin{align}
+    \frac{w}{1+w^2} = \frac{R_i - r}{R_i} \cdot \sqrt{\frac{r}{R_i-r}} = \frac{\sqrt{r( R_i - r)}}{R_i} 
+\end{align}
+so that we finally have the solution to this section of the problem
+\begin{align}
+    \int \sqrt{\frac{r}{R_i - r}} ~ dr &= R_i \Biggl[ \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}}~w\biggr) - \frac{\sqrt{r( R_i - r)}}{R_i}  \Biggr]\\
+    &= R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)}
+\end{align}
+\section{Solution}
+We have the solution to our integral, so we can now just solve the definite integral for $\Delta T$ to get our final equation:
+\begin{align}
+\Delta T &=  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr\\
+&=   - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[  R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} \biggr]_{R_i}^{R_f}
+\end{align}
+Then since
+\begin{align}
+     R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} ~ \bigg|_{R_i} = \frac{1}{2} R_i \pi
+\end{align}
+And therefore, if we define $\Delta s = R_i - R_f$, so the change in distance for which we want to calculate the time it takes to get there, our final result becomes
+\begin{align}
+    \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[ R_i \biggl( tan^{-1}\biggl(\sqrt{\frac{R_f}{ \Delta s}}\biggr) - \frac{1}{2}\pi \biggr) - \sqrt{R_f \Delta s } \biggr]
+\end{align}
+Now, for the simplified case where we disregard the radii of the objects, $R_f$ would be $0$ upon collision, so that our equation in this case becomes
+\begin{align}
+    \Delta T_{s} =  \frac{1}{2} R_i \pi \sqrt{\frac{R_i}{2G(m_1 + m_2)}} = \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
+\end{align}
+We will soon come back to this beautiful result when we are verifying our solution in the next section.
+\section{Checking the validity}
+Before we test our actual result with a calculation of (18) against a simulation, let us first take a look at Kepler's Third Law
+\begin{align}
+    p^2 = \frac{4\pi^2}{G(m_1 + m_2)} a^3
+\end{align}
+where $p$ is the orbital period and $a$ is the semi-major axis. If we imagine two planets with an infinitesimally small radii but normal masses that have an orbit with an infinitesimally small semi-minor axis, so that the second planet would basically fall into the first, and reverse back into space by being slingshot after coming incredibly close to the center of gravity of the first; then the semi-major axis would basically be half of $R_i$ and the falling time from initial position would be half of the orbital period, therefore $p = 2\Delta T$ and $a = \frac{1}{2}R_i$. Substituting this in (20) and solving for $\Delta T$ we get
+\begin{align}
+    \Delta T_{s} =  \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
+\end{align}
+which is exactly the same as the simplified result that we already found! That should give us enough confidence, but let us create a simple simulation program in Python so that we can compare the result of a simulation to the more complex solution that includes the radii of the objects.\\
+\\
+Below is the script that simulates the problem. It does this by calculating the acceleration, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collided in the simulation, it prints the simulated time it took for the objects to collide and also the times it takes according to our equation. Then finally it prints the time it takes using Kepler's equation.
+\begin{lstlisting}[language=Python]
+from decimal import *
+import math
+
+gravitational_constant = 6.6743E-11
+radius_sun = 6.9634E8
+radius_earth = 6.3781E6
+m_1 = mass_sun = 1.989E30
+m_2 = mass_earth = 5.972E24
+
+r_i = 148.6E9
+r_f = radius_sun + radius_earth
+delta_s = r_i - r_f
+
+dt = Decimal(0.001)
+t = Decimal(0)
+v = Decimal(0)
+r = Decimal(r_i)
+
+while r > r_f:
+    r += v * dt
+    a = - Decimal(gravitational_constant * (m_1 + m_2)) / Decimal(pow(r, 2))
+    v += a * dt
+    t += dt
+
+print('With a dt of ' + str(dt) + ' our simulation time in seconds is')
+print(t)
+
+print('According to our full final equation, the following should be the time in seconds:')
+print(- math.sqrt(r_i / (2*gravitational_constant*(m_1 + m_2))) * (r_i * (math.atan(math.sqrt(r_f / delta_s)) - 0.5 * math.pi) - math.sqrt(r_f * delta_s)))
+
+print("And according to the Kepler equation, we get:")
+print(math.pi * math.sqrt(pow(r_i, 3) / (8 * gravitational_constant * (m_1 + m_2))))
+\end{lstlisting}
+We get the following output while running the script:
+
+\end{document}
