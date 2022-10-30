@@ -252,13 +252,13 @@ so that
 \begin{align}
     \frac{w}{1+w^2} = \frac{R_i - r}{R_i} \cdot \sqrt{\frac{r}{R_i-r}} = \frac{\sqrt{r( R_i - r)}}{R_i} 
 \end{align}
-so that we finally have the solution to this section of the problem
+and we then finally have the solution to this section of the problem
 \begin{align}
     \int \sqrt{\frac{r}{R_i - r}} ~ dr &= R_i \Biggl[ \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}}~w\biggr) - \frac{\sqrt{r( R_i - r)}}{R_i}  \Biggr]\\
     &= R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)}
 \end{align}
 \section{Solution}
-We have the solution to our integral, so we can now just substitute it in (\ref{eq:primary_solution}) and solve the definite integral for $\Delta T$ to get our final equation:
+Now that we have the solution to our integral, we can just substitute it in (\ref{eq:primary_solution}) and solve the definite integral for $\Delta T$ to get our final equation:
 \begin{align}
 \Delta T &=  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr\\
 &=   - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[  R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} \biggr]_{R_i}^{R_f}
