@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Roy Garrido" />
+  <title>Deriving a precise Newtonian equation for the time it takes two separated bodies in an isolated system to collide due to the gravitational force</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+	 text-align:left;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/javascript">
+
+window.MathJax = {
+  tex: {
+    tags: 'ams',
+	inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+  },
+};
+</script>
+</head>
+<body>
+<header id="title-block-header">
+
+<h1 class="section">Introduction</h1>
+During my calculus lessons I wondered how we could derive an equation to calculate the time it takes for two separated objects to collide by virtue of their mutual gravitational attraction. In other words, how can we combine both the gravitational force equation
+\begin{align*}
+    F_g = G \frac{m_1 m_2}{r^2}
+\end{align*}
+and Newton's Second Law of Motion
+\begin{align*}
+    F = ma
+\end{align*}
+to derive an equation that solves for the time it takes them to collide if you specify the masses of both objects and their initial separation.
+<br/>
+<br/>
+After stumbling across some specific tricks, I finally managed to solve this and since I am still unable to find any solid resource about it online, I decided to share the solution here for anyone who may find this interesting or finds himself in a similar situation.
+<br/>
+<br/>
+Notes:
+<ul>
+<li><p>We do not take into account any relativistic effects and in this
+solution we also assume that the objects have no initial velocity at
+their starting positions.</p></li>
+<li><p>I may sometimes go into a bit of detail regarding the methods
+used to solve this problem, which might be tedious if you already know
+them, but I wanted this solution to be as self-contained as it could be,
+and I actually learned a lot of them working through this
+exercise.</p></li>
+</ul>
+
+<h1 class="section">Setting up the problem</h1>
+We start by once again looking at the two equations:
+\begin{align}
+    F_g = G \frac{m_1 m_2}{r^2}
+\end{align}
+and
+\begin{align}
+    F = ma
+\end{align}
+Taking note of the fact that the gravitational force equation holds true for both objects, meaning each object receives the same amount of force. Since
+\begin{align}
+    F = ma \implies a = \frac{F}{m}
+\end{align}
+    we can then quickly see how two objects with different masses would have different accelerations, because the acceleration $a$ of the object is inversely proportional to its mass. Using the acceleration equation above for each object, we get the following two equations for the acceleration:
+
+    \begin{align}
+        |a_1| = \frac{F_g}{m_1} = G \frac{m_2}{r^2}\\
+        |a_2| = \frac{F_g}{m_2} = G \frac{m_1}{r^2}
+    \end{align}
+    Since both of these accelerations increase the velocity of the objects in such a way that the distance $r$ (note that $r$ is the distance between their centers of gravity) between the objects diminishes faster and faster, we can define a new acceleration that is the sum of both of these accelerations.
+
+\begin{align}
+    |a_{s}| = |a_1| + |a_2| = G \frac{m_1 + m_2}{r^2}
+\end{align}
+    But we have to take note that the acceleration $a_s$ is a second derivative of the distance $r$. A positive value would imply that $r$ would get bigger and bigger as time goes by, since our assumption is that initially $v_i = 0$. We know that the opposite is true. So our equation becomes
+\begin{align}
+        a_s = -G \frac{m_1 + m_2}{r^2}
+\end{align}
+We could alternatively have done this properly by assigning vectors to the equations, it would of course have resulted in the same equation, but I felt it would have been slightly more obscure and that it would not have resulted in the same amount of intuition for the problem.<br/>
+<br/>
+In terms of derivatives, $a_s$ can be described as
+\begin{align}
+    a_s = \frac{dv}{dt} = \frac{d^2r}{dt^2} =  -G \frac{m_1 + m_2}{r^2}
+\end{align}
+We can then use the following
+\begin{align}
+    \frac{dv}{dt} = \frac{dv}{dt} \cdot \frac{dr}{dr} = \frac{dr}{dt} \cdot \frac{dv}{dr} = v \cdot \frac{dv}{dr}
+\end{align}
+to rewrite (8) after multiplying it by $dr$
+\begin{align}
+    v~{dv} = -G \frac{m_1 + m_2}{r^2}~dr
+\end{align}
+and since $G$, $m_1$ and $m_2$ are independent of $r$, we can integrate this as follows
+\begin{align}
+    \int{v~dv} = -G(m_1 + m_2) \int{\frac{1}{r^2} dr}
+\end{align}
+Which results in
+\begin{align}
+    \frac{1}{2}v^2 = G (m_1 + m_2) (\frac{1}{r} + C)
+\end{align}
+or 
+\begin{align}
+    \label{eq:v_squared}
+    v^2 = 2G (m_1 + m_2) (\frac{1}{r} + C)
+\end{align}
+Now, we know that $v=0$ when the objects are at their starting positions when $r=R_i$, the distance between the centers of gravity of the objects at their initial position. This means that our integration constant $C$ is such that
+\begin{align}
+    \frac{1}{r} + C ~ \bigg|_{r=R_i} = 0
+\end{align}
+This gives
+\begin{align}
+    C = -\frac{1}{R_i}
+\end{align}
+Substituting this result in (\ref{eq:v_squared}) and taking its square root results in
+\begin{align}
+    \label{eq:v_pm_solution}
+    v = \pm \sqrt{2G (m_1 + m_2)}  \cdot \sqrt{\frac{1}{r} - \frac{1}{R_i}}
+\end{align}
+Similar to the reasoning for acceleration, we know that the velocity causes $r$ to become smaller, therefore we should be looking at the negative solution given by (\ref{eq:v_pm_solution}). Additionally rewriting it slightly results in
+\begin{align}
+    v = \frac{dr}{dt} = - \sqrt{2G(m_1 + m_2)} \cdot \sqrt{\frac{R_i - r}{ rR_i}}
+\end{align}
+Now let us take the reciprocal of this because $dt$ is currently in the denominator and we want to solve for $dt$ so we can integrate for time. Additionally, rearranging it slightly gives
+\begin{align}
+    \frac{dt}{dr} = - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \cdot \sqrt{\frac{r}{R_i - r}}
+\end{align}
+and multiplying that by $dr$, then taking its integral results in
+\begin{align}
+    \label{eq:primary_solution}
+    \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr
+\end{align}
+Our main problem now consists of solving the integral on the right side of the equation, which we will attempt in the next section
+<h1 class="section">Solving the integral</h1>
+First, let us define the integral as the following:
+\begin{align}
+    \int \sqrt{\frac{r}{R_i - r}} ~ dr
+\end{align}
+Then, let us define a substitution that is easier to work with:
+\begin{align}
+    u = \frac{r}{R_i - r}
+\end{align}
+its derivative in terms of $r$ is
+\begin{align}
+    \frac{du}{dr} = \frac{d}{dr}\Bigg[ \frac{r}{R_i - r} \Bigg] = \frac{R_i}{(R_i - r)^2}
+\end{align}
+and since
+\begin{align}
+    (u + 1)^2 = \biggr(\frac{R_i}{R_i - r}\biggl)^2 = \frac{R_i^2}{(R_i - r)^2}
+\end{align}
+we can rewrite $dr$ in terms of $u$
+\begin{align}
+    dr = \frac{R_i}{(u+1)^2} ~du
+\end{align}
+So our integral now becomes
+\begin{align}
+    \int \sqrt{u} ~ dr = R_i \int \frac{\sqrt{u}}{(u + 1)^2} ~ du
+\end{align}
+Then let $w = \sqrt{u}$, so that
+\begin{align}
+    \frac{dw}{du} = \frac{d}{du} \biggl[ \sqrt{u} \biggr] = \frac{1}{2\sqrt{u}}
+\end{align}
+which implies
+\begin{align}
+    du = 2\sqrt{u}~dw = 2w~ dw
+\end{align}
+and with that our integral in terms of $w$ becomes
+\begin{align}
+    R_i \int \frac{\sqrt{u}}{(u + 1)^2} ~ du = 2R_i \int \frac{w^2}{(w^2 + 1)^2}~ dw
+\end{align}
+Then we can use partial fraction decomposition to rewrite the right side to
+\begin{align}
+    2R_i \Biggl[ \int \frac{1}{w^2 + 1} ~dw - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]
+\end{align}
+The solution to the left integral is simply $tan^{-1}(w)$ so that our integral becomes
+\begin{align}
+    \label{eq:solution_w}
+    2R_i \Biggl[ \tan^{-1}(w) - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]
+\end{align}
+However, the right integral requires slightly more work. For that let us define a $z$ such that $w = tan(z)$. Then
+\begin{align}
+    \label{eq:w_squared_add_one}
+    (w^2 + 1) = (tan^2(z) + 1)^2 = sec^4(z)
+\end{align}
+and
+\begin{align}
+    \label{eq:derivative_w_dz}
+    \frac{dw}{dz} = \frac{d}{dz}[tan(z)] = sec^2(z) \implies dw = sec^2(z)dz
+\end{align} 
+Combining (\ref{eq:w_squared_add_one}) and (\ref{eq:derivative_w_dz}) we get that the right side integral of (\ref{eq:solution_w}) can be rewritten as
+\begin{align}
+    \int \frac{1}{(w^2 + 1)^2} ~ dw = \int \frac{1}{sec^2(z)}~dz = \int{cos^2(dz)}~dz
+\end{align}
+Then, using integration by parts we get 
+\begin{align}
+     \int cos^2(z) ~ dz &= sin(z)~cos(z) + \int sin^2(z) ~dz\\
+    &= sin(z)~cos(z) + \int (1 - cos^2(z)) ~dz \\
+    &= sin(z)~cos(z) + z - \int cos^2(z)~dz
+\end{align}
+so that
+\begin{align}
+    \label{eq:cos_squared}
+    \int cos^2(z) dz = \frac{1}{2} \bigl(z + sin(z)~cos(z)\bigr)
+\end{align}
+And since we defined $w = tan(z)$, $z = tan^{-1}(w)$ which means (\ref{eq:cos_squared}) becomes
+\begin{align}
+    \label{eq:temp_right}
+    \frac{1}{2} \bigl(  tan^{-1}(w) + sin( tan^{-1}(w))~cos( tan^{-1}(w)) \bigr)
+\end{align}
+When we take the $sin$ of an angle, we get the ratio of the opposite side over the hypotenuse
+\begin{align}
+    sin = \frac{\text{opposite}}{\text{hypotenuse}}
+\end{align}
+Now, $tan^{-1}$ gives us an angle if we supply it with the ratio of opposite over adjacent, and if we supply this angle to the $sin$ function, we would get back the ratio of opposite over the hypotenuse, that is what $sin$ does. Can we calculate the result of $sin$ directly? Yes, we can, because we already supply $tan^{-1}$ with both the opposite and adjacent side with which we can calculate the hypotenuse. The adjacent side is just simply $1$, so therefore sine and by the same reasoning cosine, are given as follows
+\begin{align}
+    sin(tan^{-1}(\frac{w}{1})) &= \frac{w}{\sqrt{1 + w^2}} \\
+    cos(tan^{-1}(\frac{w}{1})) &= \frac{1}{\sqrt{1 + w^2}}
+\end{align}
+Substituting this back into (\ref{eq:temp_right}) gives us our solution to the cosine squared integral
+\begin{align}
+    \int cos^2(z) dz = \frac{1}{2} \bigl(z + \frac{w}{1+w^2}\bigr)
+\end{align}
+If we now substitute this back into our original integral, substitute $z = tan^{-1}(w)$ and rearrange slightly we get
+\begin{align}
+    2R_i \Biggl[ \tan^{-1}(w) - \int \frac{1}{(w^2 + 1)^2} ~dw \Biggr]\\
+    = R_i \Biggl[ \tan^{-1}(w) - \frac{w}{1+w^2}\Biggr]
+\end{align}
+Now we only have to rewrite everything in terms of $r$ and we obtain a solution to our integral. Since
+we substituted
+\begin{align}
+    w = \sqrt{u} = \sqrt{\frac{r}{R_i - r}}
+\end{align}
+and
+\begin{align}
+    {1+w^2} = \frac{R_i}{R_i - r} 
+\end{align}
+so that
+\begin{align}
+    \frac{w}{1+w^2} = \frac{R_i - r}{R_i} \cdot \sqrt{\frac{r}{R_i-r}} = \frac{\sqrt{r( R_i - r)}}{R_i} 
+\end{align}
+and we then finally have the solution to this section of the problem
+\begin{align}
+    \int \sqrt{\frac{r}{R_i - r}} ~ dr &= R_i \Biggl[ \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}}~w\biggr) - \frac{\sqrt{r( R_i - r)}}{R_i}  \Biggr]\\
+    &= R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)}
+\end{align}
+<h1 class="section">Solution</h1>
+Now that we have the solution to our integral, we can just substitute it in (\ref{eq:primary_solution}) and solve the definite integral for $\Delta T$ to get our final equation:
+\begin{align}
+\Delta T &=  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \int_{R_i}^{R_f} \sqrt{\frac{r}{R_i - r}} dr\\
+&=   - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[  R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} \biggr]_{R_i}^{R_f}
+\end{align}
+Then since
+\begin{align}
+     R_i \tan^{-1}\biggl(\sqrt{\frac{r}{R_i - r}} ~ \biggr) -\sqrt{r( R_i - r)} ~ \bigg|_{R_i} = \frac{1}{2} R_i \pi
+\end{align}
+If we define $\Delta s = R_i - R_f$, the change in distance for which we want to calculate the time it takes to get there, our final result becomes
+\begin{align}
+    \Delta T =  - \sqrt{\frac{R_i}{2G(m_1 + m_2)}} \biggl[ R_i \biggl( tan^{-1}\biggl(\sqrt{\frac{R_f}{ \Delta s}}\biggr) - \frac{1}{2}\pi \biggr) - \sqrt{R_f \Delta s } \biggr]
+\end{align}
+So there we have it, our final result. Now, for the simplified case where we disregard the radii of the objects, $R_f$ would be $0$ upon collision, so that our equation in this case becomes
+\begin{align}
+    \label{eq:simplified_kepler}
+    \Delta T_{s} =  \frac{1}{2} R_i \pi \sqrt{\frac{R_i}{2G(m_1 + m_2)}} = \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
+\end{align}
+We will soon come back to this beautiful simplification when we are verifying our solution in the next section.
+<h1 class="section">Checking the validity</h1>
+Before we test our actual result with a calculation of (18) against a simulation, let us first take a look at Kepler's Third Law
+\begin{align}
+    p^2 = \frac{4\pi^2}{G(m_1 + m_2)} a^3
+\end{align}
+where $p$ is the orbital period and $a$ is the semi-major axis. If we imagine two planets with infinitesimally small radii but normal masses that have an orbit with an infinitesimally small semi-minor axis, so that the second planet would basically fall into the first, and reverse back into space by being slingshot after coming incredibly close to the center of gravity of the first; then the semi-major axis would basically be half of $R_i$ and the falling time from initial position would be half of the orbital period, therefore $p = 2\Delta T$ and $a = \frac{1}{2}R_i$. Substituting this in (20) and solving for $\Delta T$ we get
+\begin{align}
+    \Delta T_{K} =  \pi \sqrt{\frac{R_i^3}{8G(m_1 + m_2)}}
+\end{align}
+which is exactly the same as the simplified result (\ref{eq:simplified_kepler}) that we already found! That should give us enough confidence, but let us create a simple simulation program in Python so that we can compare the result of a simulation to the more complex solution that includes the radii of the objects.<br/>
+<br/>
+Below is the script that simulates a hypothetical situation where the earth stops following its orbit and starts falling straight into the sun. The script does this by calculating the acceleration at the current distance, applying the acceleration to the velocity and applying the velocity to the distance. It calculates this every $0.001$ second (or really whatever you set the variable $dt$ to, until the objects collide. We use the Decimal class for enhanced precision. After the objects collide, it prints the time it took in our simulation and the time it should take according to our equation. Then finally it prints the time according to the Kepler's equation.
+
+<div class="sourceCode" id="cb1" data-language="Python"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>gravitational_constant <span class="op">=</span> <span class="fl">6.6743E-11</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>radius_sun <span class="op">=</span> <span class="fl">6.9634E8</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>radius_earth <span class="op">=</span> <span class="fl">6.3781E6</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>m_1 <span class="op">=</span> mass_sun <span class="op">=</span> <span class="fl">1.989E30</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>m_2 <span class="op">=</span> mass_earth <span class="op">=</span> <span class="fl">5.972E24</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>r_i <span class="op">=</span> <span class="fl">148.6E9</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>r_f <span class="op">=</span> radius_sun <span class="op">+</span> radius_earth</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>delta_s <span class="op">=</span> r_i <span class="op">-</span> r_f</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> Decimal(<span class="fl">0.001</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> Decimal(<span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> Decimal(<span class="dv">0</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> Decimal(r_i)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> r <span class="op">&gt;</span> r_f:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    r <span class="op">+=</span> v <span class="op">*</span> dt</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="op">-</span> Decimal(gravitational_constant <span class="op">*</span> (m_1 <span class="op">+</span> m_2)) <span class="op">/</span> Decimal(<span class="bu">pow</span>(r, <span class="dv">2</span>))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    v <span class="op">+=</span> a <span class="op">*</span> dt</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    t <span class="op">+=</span> dt</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;dt: &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(dt, <span class="dv">6</span>)))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;simulation time: &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(t, <span class="dv">6</span>)))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>equation_time <span class="op">=</span> <span class="op">-</span> math.sqrt(r_i <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> gravitational_constant <span class="op">*</span> (m_1 <span class="op">+</span> m_2))) <span class="op">*</span> (</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            r_i <span class="op">*</span> (math.atan(math.sqrt(r_f <span class="op">/</span> delta_s)) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> math.pi) <span class="op">-</span> math.sqrt(r_f <span class="op">*</span> delta_s))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;equation time: &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(equation_time, <span class="dv">6</span>)))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>kepler_time <span class="op">=</span> math.pi <span class="op">*</span> math.sqrt(<span class="bu">pow</span>(r_i, <span class="dv">3</span>) <span class="op">/</span> (<span class="dv">8</span> <span class="op">*</span> gravitational_constant <span class="op">*</span> (m_1 <span class="op">+</span> m_2)))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;kepler time: &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(kepler_time, <span class="dv">6</span>)))    </span></code></pre></div>
+<p>We get the following output while running the script:</p>
+<pre><code>dt: 0.001000
+simulation time: 5521437.476000
+equation time: 5521437.475077
+kepler time: 5522200.716264</code></pre>
+
+
+So it takes $5521437$ seconds, or 63 days 21 hours and almost 44 minutes, for the earth to crash into the sun. Running the program with an increasingly small $dt$, it is also very convincing that the simulation time actually converges to the time of our equation. Also, you can see that the time difference by using the Kepler's equation simplification is quite large in terms of seconds. In fact it is off by approximately 763 seconds. 
+
+</body>
+</html>
