@@ -1,4 +1,4 @@
-# Newtonian Gravitational Collision Time
+# Newtonian Gravitation Collision Time
 
 Output of the simulation with a `dt` of `0.001`:
 ```
