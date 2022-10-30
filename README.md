@@ -1,6 +1,6 @@
 # Newtonian Gravitational Collision Time
 
-Output of the simulation with a `dt of 0.001`:
+Output of the simulation with a `dt` of `0.001`:
 ```
 With a dt of 0.001000000000000000020816681711721685132943093776702880859375 our simulation time in seconds is
 5521437.476000000115752156694
