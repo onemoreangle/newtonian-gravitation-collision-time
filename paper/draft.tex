@@ -42,7 +42,7 @@
 \maketitle
 
 \section{Introduction}
-During my calculus lessons I wondered how we could derive an equation to calculate the time it takes for two separated objects to collide by virtue of their mutual gravitational attraction. In other words, how can we combine both the gravitational force equation
+How can we derive an equation to calculate the time it takes for two separated objects to collide by virtue of their mutual gravitational attraction?  That is to ask, how can we combine both the gravitational force equation
 \begin{align*}
     F_g = G \frac{m_1 m_2}{r^2}
 \end{align*}
@@ -50,10 +50,10 @@ and Newton's Second Law of Motion
 \begin{align*}
     F = ma
 \end{align*}
-to derive an equation that solves for the time it takes them to collide if you specify the masses of both objects and their initial separation.
+to derive an equation that solves for the time it takes them to collide if you specify the masses of both objects and their initial separation?
 \\
 \\
-After stumbling across some specific tricks, I finally managed to solve this and since I am still unable to find any solid resource about it online, I decided to share the solution here for anyone who may find this interesting or finds himself in a similar situation.
+This is a question I had on my mind for quite a long time and I have finally managed to solve it after stumbling across some specific tricks, and since I am still unable to find any solid resource about it online, I decided to share the solution here for anyone who may find this interesting or finds himself in a similar situation.
 \\
 \\
 Notes:
@@ -95,13 +95,14 @@ We could alternatively have done this properly by assigning vectors to the equat
 \\
 In terms of derivatives, $a_s$ can be described as
 \begin{align}
+    \label{eq:acceleration_w_derivatives}
     a_s = \frac{dv}{dt} = \frac{d^2r}{dt^2} =  -G \frac{m_1 + m_2}{r^2}
 \end{align}
 We can then use the following
 \begin{align}
     \frac{dv}{dt} = \frac{dv}{dt} \cdot \frac{dr}{dr} = \frac{dr}{dt} \cdot \frac{dv}{dr} = v \cdot \frac{dv}{dr}
 \end{align}
-to rewrite (8) after multiplying it by $dr$
+to rewrite (\ref{eq:acceleration_w_derivatives}) after multiplying it by $dr$
 \begin{align}
     v~{dv} = -G \frac{m_1 + m_2}{r^2}~dr
 \end{align}
@@ -331,5 +332,5 @@ simulation time: 5521437.476000
 equation time: 5521437.475077
 kepler time: 5522200.716264
 \end{lstlisting}
-So it takes $5521437$ seconds, or 63 days 21 hours and almost 44 minutes, for the earth to crash into the sun. Running the program with an increasingly small $dt$, it is also very convincing that the simulation time actually converges to the time of our equation. Also, you can see that the time difference by using the Kepler's equation simplification is quite large in terms of seconds. In fact it is off by approximately 763 seconds. 
+So it would take $5521437$ seconds, or 63 days 21 hours and almost 44 minutes, for the earth to crash into the sun. Running the program with an increasingly small $dt$, it is also very convincing that the simulation time actually converges to the time given by our equation. Also, you can see that the time difference of the Kepler's equation simplification is quite large in terms of seconds. In fact it is off by approximately 763 seconds. 
 \end{document}
